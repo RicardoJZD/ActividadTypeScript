@@ -1,0 +1,124 @@
+class People{
+  id:number=0;
+  name:string='';
+  lastname:string='';
+  age:number=0;
+  arrayPeople:Array<any>=[];
+  
+}
+
+interface iPeople extends People{
+  getAll():void;
+  getById(id:number):void;
+  getByName(name:string):void;
+  create(id:number,name:string,lastName:string,age:number):void;
+  update(id:number):void;
+  delate(id:number):void;
+}
+
+class Repository implements iPeople{
+  
+  id:number=0;
+  name:string='';
+  lastname:string='';
+  age:number=0
+
+  constructor(){}
+
+  arrayPeople=[
+    {id: 1, name: 'Miguel', lastName: 'Vidal', age: 25},
+    {id: 2, name: 'Sara', lastName: 'Aretaga', age: 20},
+    {id: 3, name: 'Alejandro', lastName: 'Otaiza', age: 23},
+    {id: 4, name: 'Ayleen', lastName: 'Orjuela', age: 21},
+    {id: 5, name: 'Ricardo', lastName: 'Zabaleta', age: 30}]
+
+  getAll(){
+    const copymyObject = this.arrayPeople.map((item) => {return item});
+    console.log(copymyObject)
+  }
+
+  getById(id:number):void{
+    const found = this.arrayPeople.find(element => element.id == id);
+    console.log(found);
+  }
+
+  getByName(name:string):void{
+    const found = this.arrayPeople.find(element => element.name == name);
+    console.log(found);
+  }
+
+  create(id:number,name:string,lastName:string,age:number):void{
+    this.arrayPeople.push({id:id,name:name,lastName:lastName,age:age})
+    console.log("Datos Guardados")
+    const copymyObject = this.arrayPeople.map((item) => {return item});
+    console.log(copymyObject)
+  }
+
+  update(id:number):void{
+    let nname = prompt('Digita el nuevo nombre')
+    let llastname = prompt('Digita el nuevo apellido')
+    let aage = Number(prompt('Digita la nueva edad'))
+  
+    const actualizarIndex = this.arrayPeople.findIndex(element => element.id == id);
+    this.arrayPeople[actualizarIndex].name = nname,
+    this.arrayPeople[actualizarIndex].lastName=llastname
+    this.arrayPeople[actualizarIndex].age=aage;
+    console.log(this.arrayPeople[actualizarIndex])
+  }
+
+  delate(id:number){
+     const copyArray = this.arrayPeople.filter((i) => i.id != id);
+        console.log(copyArray)
+  }
+}      
+
+class Menu{
+
+  menu():number{
+    let menu = Number(window.prompt('Digita una opcion \n'
+      +'1. Ver Datos \n'
+      +'2. Buscar por id \n'
+      +'3. Buscar por Nombre \n'
+      +'4. Llenar Datos \n'
+      +'5. Actualizar \n'
+      +'6. Eliminar \n'
+      +'7. Salir'));
+    return menu;
+  }
+}
+
+let objRepo = new Repository()
+let objMenu = new Menu()
+
+  switch(objMenu.menu()){
+    case 1:
+    objRepo.getAll()
+    break;
+    case 2:
+    let id = Number(prompt('Digita el id'))
+    objRepo.getById(id)
+    break;
+    case 3:
+    let name = prompt('Digita el Nombre')
+    objRepo.getByName(name)
+    break;
+    case 4:
+    objRepo.create(6,'Andres','Lopez',23)
+    break;
+    case 5:
+    objRepo.update(1)
+    break;
+    case 6:
+    objRepo.delate(1)
+    break;
+    case 7:
+    alert("Hasta Luego")
+    break;
+    default:
+    alert("Opcion incorrecta")
+    break;
+
+  }
+
+
+
